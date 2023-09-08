@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+
+
+
 const photo1 = {
   "id": "1",
   "location": {
@@ -14,7 +18,7 @@ const photo1 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo2 = {
   "id": "2",
@@ -32,7 +36,7 @@ const photo2 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo3 = {
   "id": "3",
@@ -50,7 +54,7 @@ const photo3 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo4 = {
   "id": "4",
@@ -69,7 +73,7 @@ const photo4 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo5 = {
   "id": "5",
@@ -87,9 +91,9 @@ const photo5 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
-const photo6 =  {
+const photo6 = {
   "id": "6",
   "location": {
     "city": "Montreal",
@@ -105,7 +109,7 @@ const photo6 =  {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo7 = {
   "id": "7",
@@ -123,7 +127,7 @@ const photo7 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo8 = {
   "id": "8",
@@ -141,7 +145,7 @@ const photo8 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo9 = {
   "id": "9",
@@ -159,7 +163,7 @@ const photo9 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 const photo10 = {
   "id": "10",
@@ -177,7 +181,7 @@ const photo10 = {
     "name": "Joe Example",
     "profile": `${process.env.PUBLIC_URL}/profile-1.jpg`
   }
-}
+};
 
 
 
@@ -273,6 +277,6 @@ const photos = [
       photo5,
     }
   }
-]
+];
 
 export default photos;

@@ -4,21 +4,29 @@ import "../styles/PhotoListItem.scss";
 
 
 
-const PhotoListItem = (props) => {
-
+const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, toggleFavourite }) => {
+  const handleToggleFavourite = () => {
+    toggleFavourite(id);
+  };
   return (
-    <div className="photo-list-item">
-      <PhotoFavButton />
+    <div className="photo-list__item">
+      <PhotoFavButton
+        photoId={id}
+        isFav={isFav}
+        toggleFavourite={handleToggleFavourite}
+      />
       <div className="photo">
-        <img src={props.imageSource} alt={`Photo ${props.id}`} />
+        <img src={imageSource} alt={`Photo ${id}`} className="photo-list__image" />
       </div>
-      <div className="info">
-        <div className="username">{props.username}</div>
-        <div className="location">
-          {props.location.city}, {props.location.country}
+      <div className="photo-list__user-details">
+        <div className="photo-list__user-info">{username}
+          <div className="photo-list__user-location">
+            {location.city}, {location.country}
+          </div>
         </div>
+
         <div className="profile-picture">
-          <img src={props.profile} alt={`Profile ${props.id}`} />
+          <img src={profile} alt={`Profile ${id}`} className="photo-list__user-profile" />
         </div>
       </div>
     </div>

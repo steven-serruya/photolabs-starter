@@ -1,10 +1,9 @@
 import React from 'react';
-
-import PhotoListItem from './components/PhotoListItem';
+import { useState } from 'react';
 import './App.scss';
-import PhotoFavButton from 'components/PhotoFavButton';
-import PhotoList from 'components/PhotoList';
-import TopicList from 'components/TopicList';
+import photos from './mocks/photos.js';
+import topics from './mocks/topics.js';
+import HomeRoute from 'routes/HomeRoute';
 
 // Note: Rendering a single component to build components in isolation
 
@@ -42,10 +41,18 @@ import TopicList from 'components/TopicList';
 // ];
 
 const App = () => {
+  const [favourites, setFavourites] = useState([]);
+  const toggleFavourite = (photoId) => {
+    console.log(photoId);
+    if (favourites.includes(photoId)) {
+      setFavourites(favourites.filter(id => id !== photoId));
+    } else {
+      setFavourites([...favourites, photoId]);
+    }
+  };
   return (
     <div className="App">
-      <PhotoList />
-      <TopicList />
+      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} />
 
 
 
