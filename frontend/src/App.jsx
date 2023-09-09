@@ -43,10 +43,12 @@ import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 const App = () => {
   const [favourites, setFavourites] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
-
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    selectedPhoto: null
+  });
   const toggleFavourite = (photoId) => {
-    console.log(photoId);
+
     if (favourites.includes(photoId)) {
       setFavourites(favourites.filter(id => id !== photoId));
     } else {
@@ -54,15 +56,25 @@ const App = () => {
     }
   };
 
-  const toggleModal = () => {
-    setModalOpen(false);
+  const toggleModal = (photo) => {
+    if (photo) {
+      setModalState({
+        isOpen: true,
+        selectedPhoto: photo
+      });
+    } else {
+      setModalState({
+        isOpen: false,
+        selectedPhoto: null
+      });
+    }
   };
 
 
   return (
     <div className="App">
-      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} toggleModal={setModalOpen} />
-      {isModalOpen && <PhotoDetailsModal onClose={toggleModal} />}
+      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} toggleModal={toggleModal} />
+      {modalState.isOpen && <PhotoDetailsModal onClose={toggleModal} photo={modalState.selectedPhoto} />}
 
 
 

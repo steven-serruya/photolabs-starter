@@ -76,6 +76,7 @@ const PhotoList = ({ favourites, toggleFavourite, toggleModal }) => {
             profile={photoData.user.profile}
             isFav={favourites.includes(photoData.id)}
             toggleFavourite={toggleFavourite}
+            photo={photoData}
             toggleModal={toggleModal}
           />
         );

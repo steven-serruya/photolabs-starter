@@ -4,9 +4,10 @@ import "../styles/PhotoListItem.scss";
 
 
 
-const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, toggleFavourite, toggleModal }) => {
+const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, toggleFavourite, toggleModal, photo }) => {
   const handleToggleFavourite = () => {
     toggleFavourite(id);
+
   };
   return (
     <div className="photo-list__item">
@@ -16,7 +17,8 @@ const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, to
         toggleFavourite={handleToggleFavourite}
       />
       <div className="photo">
-        <img src={imageSource} alt={`Photo ${id}`} className="photo-list__image" onClick={() => toggleModal(true)} />
+        <img src={imageSource} alt={`Photo ${id}`} className="photo-list__image" onClick={() => toggleModal(photo)}
+        />
       </div>
       <div className="photo-list__user-details">
         <div className="photo-list__user-info">{username}
