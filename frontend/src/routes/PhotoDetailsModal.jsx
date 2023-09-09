@@ -2,9 +2,12 @@ import React from 'react';
 import PhotoListItem from 'components/PhotoListItem';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
+import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
   console.log(photo);
+
+  
 
   return (
 
@@ -16,9 +19,19 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
       <br></br>
 
       <img src={photo.urls.regular} alt={`Photo by ${photo.user.username}`} className="photo-details-modal__image" />
+
+
       <div className="photo-details-modal__images">
-        {Object.values(photo.similar_photos).map((similarPhoto, index) => (
+
+        {<PhotoList
+          photos={Object.values(photo.similar_photos)}
+          favourites={favourites}
+          toggleFavourite={toggleFavourite}
+        />
+
+        /* {Object.values(photo.similar_photos).map((similarPhoto, index) => (
           <PhotoListItem
+            className='modal-photo-list'
             key={similarPhoto.id}
             id={similarPhoto.id}
             location={similarPhoto.location}
@@ -29,7 +42,7 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
             toggleFavourite={toggleFavourite}
             photo={similarPhoto}
           />
-        ))}
+        ))} */}
       </div>
 
     </div>

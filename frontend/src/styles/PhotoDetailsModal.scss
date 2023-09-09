@@ -9,7 +9,10 @@
   width: 55%;
   overflow-y: scroll;
   border-radius: 12px;
+
 }
+
+
 
 .photo-details-modal__close-button {
   background-color: white;
@@ -27,12 +30,18 @@
 .photo-details-modal__images {
   margin-left: 36px;
   margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+
 }
 
 .photo-details-modal__image {
-  max-width: 90%;
-  border-radius: 8px;
-
+  max-height: 95%;
+  max-width: 85%;
+  border-radius: 24px;
+  border-top: 20;
+  margin-left: 138px;
+  margin-top: 30px;
 }
 
 .photo-details-modal__top-bar {
@@ -57,3 +66,12 @@
   margin-bottom: 24px;
   width: 90%;
 }
+
+
+
+// Styles for individual items (assuming each similar photo has a direct child class or element you can reference)
+// If not, you might need to add or modify existing styles for child elements
+// .photo-details-modal__similar-photos-grid>* {
+//   flex: 0 1 calc(33.33% - 20px); // Assuming you want 3 items per row; adjust percentage for more or fewer items. 20px is the gap between items.
+//   margin-bottom: 20px; // Space between rows of items
+// }

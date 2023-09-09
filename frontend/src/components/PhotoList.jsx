@@ -68,6 +68,7 @@ const PhotoList = ({ favourites, toggleFavourite, toggleModal }) => {
       {photos.map((photoData) => {
         return (
           <PhotoListItem
+            className="photo-list-item"
             key={photoData.id}
             id={photoData.id}
             location={photoData.location}
