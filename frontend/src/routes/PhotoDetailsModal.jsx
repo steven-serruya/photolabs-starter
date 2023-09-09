@@ -3,7 +3,7 @@ import PhotoListItem from 'components/PhotoListItem';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 
-const PhotoDetailsModal = ({ onClose, photo }) => {
+const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
   console.log(photo);
 
   return (
@@ -13,9 +13,10 @@ const PhotoDetailsModal = ({ onClose, photo }) => {
       <button className="photo-details-modal__close-button" onClick={() => onClose(null)}>
         <img src={closeSymbol} alt="close symbol" />
       </button>
+      <br></br>
 
       <img src={photo.urls.regular} alt={`Photo by ${photo.user.username}`} className="photo-details-modal__image" />
-      <div className="photo-details-modal__similar-photos">
+      <div className="photo-details-modal__images">
         {Object.values(photo.similar_photos).map((similarPhoto, index) => (
           <PhotoListItem
             key={similarPhoto.id}
@@ -24,6 +25,8 @@ const PhotoDetailsModal = ({ onClose, photo }) => {
             imageSource={similarPhoto.urls.regular}
             username={similarPhoto.user.username}
             profile={similarPhoto.user.profile}
+            isFav={favourites.includes(similarPhoto.id)}
+            toggleFavourite={toggleFavourite}
             photo={similarPhoto}
           />
         ))}

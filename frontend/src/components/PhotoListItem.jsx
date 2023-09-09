@@ -15,6 +15,7 @@ const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, to
         photoId={id}
         isFav={isFav}
         toggleFavourite={handleToggleFavourite}
+        onClick={() => toggleFavourite(photo.id)}
       />
       <div className="photo">
         <img src={imageSource} alt={`Photo ${id}`} className="photo-list__image" onClick={() => toggleModal(photo)}
