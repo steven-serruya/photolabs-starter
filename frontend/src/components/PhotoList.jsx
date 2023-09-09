@@ -62,7 +62,7 @@ import photos from 'mocks/photos';
 
 
 
-const PhotoList = ({ favourites, toggleFavourite }) => {
+const PhotoList = ({ favourites, toggleFavourite, toggleModal }) => {
   return (
     <ul className="photo-list">
       {photos.map((photoData) => {
@@ -76,6 +76,7 @@ const PhotoList = ({ favourites, toggleFavourite }) => {
             profile={photoData.user.profile}
             isFav={favourites.includes(photoData.id)}
             toggleFavourite={toggleFavourite}
+            toggleModal={toggleModal}
           />
         );
       })}

@@ -4,6 +4,7 @@ import './App.scss';
 import photos from './mocks/photos.js';
 import topics from './mocks/topics.js';
 import HomeRoute from 'routes/HomeRoute';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 // Note: Rendering a single component to build components in isolation
 
@@ -42,6 +43,8 @@ import HomeRoute from 'routes/HomeRoute';
 
 const App = () => {
   const [favourites, setFavourites] = useState([]);
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const toggleFavourite = (photoId) => {
     console.log(photoId);
     if (favourites.includes(photoId)) {
@@ -50,9 +53,16 @@ const App = () => {
       setFavourites([...favourites, photoId]);
     }
   };
+
+  const toggleModal = () => {
+    setModalOpen(false);
+  };
+
+
   return (
     <div className="App">
-      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} />
+      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} toggleModal={setModalOpen} />
+      {isModalOpen && <PhotoDetailsModal onClose={toggleModal} />}
 
 
 
