@@ -74,7 +74,14 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} toggleModal={toggleModal} />
-      {modalState.isOpen && <PhotoDetailsModal onClose={toggleModal} photo={modalState.selectedPhoto} />}
+      {modalState.isOpen &&
+        <PhotoDetailsModal
+          onClose={toggleModal}
+          photo={modalState.selectedPhoto}
+          favourites={favourites}
+          toggleFavourite={toggleFavourite}
+          toggleModal={toggleModal}
+        />}
 
 
 
