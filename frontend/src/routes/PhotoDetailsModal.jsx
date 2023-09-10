@@ -1,5 +1,4 @@
 import React from 'react';
-import PhotoListItem from 'components/PhotoListItem';
 import '../styles/PhotoDetailsModal.scss';
 import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoList from 'components/PhotoList';
@@ -7,7 +6,7 @@ import PhotoList from 'components/PhotoList';
 const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
   console.log(photo);
 
-  
+
 
   return (
 
@@ -29,20 +28,7 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
           toggleFavourite={toggleFavourite}
         />
 
-        /* {Object.values(photo.similar_photos).map((similarPhoto, index) => (
-          <PhotoListItem
-            className='modal-photo-list'
-            key={similarPhoto.id}
-            id={similarPhoto.id}
-            location={similarPhoto.location}
-            imageSource={similarPhoto.urls.regular}
-            username={similarPhoto.user.username}
-            profile={similarPhoto.user.profile}
-            isFav={favourites.includes(similarPhoto.id)}
-            toggleFavourite={toggleFavourite}
-            photo={similarPhoto}
-          />
-        ))} */}
+        }
       </div>
 
     </div>

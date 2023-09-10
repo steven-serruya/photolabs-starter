@@ -1,35 +1,14 @@
 .photo-list {
   display: flex;
-  flex-direction: column; // Stack the items vertically
-  // align-items: center; // Center the items horizontally
+  flex-wrap: wrap;
   justify-content: space-between;
   list-style-type: none;
   margin: 0;
   padding: 0;
-  // width: 100%; // Ensure the container takes the full width
-}
-
-.photo-list-item {
-  // Assuming this class is applied to each photo item
-  max-width: 150px; // Use 100% if you don't want any margins
-  margin: 10px 0; // Adjust to give some spacing between items
-
-}
-
-.photo-list-item img {
-  width: 100%;
-  height: auto;
 }
 
 .photo-list:after {
   content: "";
   flex: 0 1 30%;
   margin: 5px;
-}
-
-div.photo-details-modal__images {
-
-  .photo-list {
-    flex-direction: row;
-  }
 }
