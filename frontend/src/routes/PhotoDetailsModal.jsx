@@ -4,10 +4,10 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoList from 'components/PhotoList';
 
 const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
-  console.log(photo);
+  console.log('photo+++', photo);
 
 
-
+  console.log('objects+++', Object.values(photo.similar_photos));
   return (
 
     <div className="photo-details-modal">
@@ -22,13 +22,17 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
 
       <div className="photo-details-modal__images">
 
-        {<PhotoList
-          photos={Object.values(photo.similar_photos)}
+        <PhotoList
+          photoData={Object.values(photo.similar_photos)}
+
+
           favourites={favourites}
           toggleFavourite={toggleFavourite}
+        // toggleModal={toggleModal}
+        // photoData={photoData}
         />
 
-        }
+
       </div>
 
     </div>

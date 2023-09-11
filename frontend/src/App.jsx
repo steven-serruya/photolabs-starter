@@ -1,47 +1,26 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.scss';
-import photos from './mocks/photos.js';
-import topics from './mocks/topics.js';
 import HomeRoute from 'routes/HomeRoute';
 import PhotoDetailsModal from 'routes/PhotoDetailsModal';
+import useApplicationData from 'hooks/useApplicationData';
 
-// Note: Rendering a single component to build components in isolation
 
-// const photoData = [
-//   {
-//     id: "1",
-//     location: {
-//       city: "Montreal",
-//       country: "Canada",
-//     },
-//     imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-//     username: "Joe Example",
-//     profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-//   },
-//   {
-//     id: "2",
-//     location: {
-//       city: "Toronto",
-//       country: "Canada",
-//     },
-//     imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-//     username: "Joe Example",
-//     profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-//   },
-//   {
-//     id: "3",
-//     location: {
-//       city: "Vancouver",
-//       country: "Canada",
-//     },
-//     imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-//     username: "Joe Example",
-//     profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-//   }
-// ];
 
 const App = () => {
+  const {
+    state,
+    onPhotoSelect,
+    updateToFavPhotoIds,
+    onLoadTopic,
+    onClosePhotoDetailsModal,
+  } = useApplicationData();
+
+  const { photoData } = state;
+  const { topicData } = state;
+
+  console.log(topicData);
+  
   const [favourites, setFavourites] = useState([]);
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -73,8 +52,13 @@ const App = () => {
 
   return (
     <div className="App">
-      <HomeRoute toggleFavourite={toggleFavourite} favourites={favourites} toggleModal={toggleModal} />
-      {modalState.isOpen &&
+      <HomeRoute
+        topicData={topicData}
+        photoData={photoData}
+        toggleFavourite={toggleFavourite}
+        favourites={favourites}
+        toggleModal={toggleModal}
+      />      {modalState.isOpen &&
         <PhotoDetailsModal
           onClose={toggleModal}
           photo={modalState.selectedPhoto}
