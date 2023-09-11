@@ -4,12 +4,17 @@ import "../styles/TopicListItem.scss";
 
 
 
-const TopicListItem = (props) => {
+const TopicListItem = ({ label, handleTopicClick, id }) => {
   return (
-    <div className="topic-list__item" key={props.topicData.id}>
-      {props.label}
+    <div className="topic-list__item">
+      <a href="#" onClick={(e) => {
+        handleTopicClick(id);
+      }}>
+        {label}
+      </a>
     </div>
   );
 };
+
 
 export default TopicListItem;

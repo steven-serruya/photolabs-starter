@@ -14,13 +14,14 @@ const App = () => {
     updateToFavPhotoIds,
     onLoadTopic,
     onClosePhotoDetailsModal,
+    handleTopicClick
   } = useApplicationData();
 
   const { photoData } = state;
   const { topicData } = state;
 
   console.log(topicData);
-  
+
   const [favourites, setFavourites] = useState([]);
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -53,6 +54,7 @@ const App = () => {
   return (
     <div className="App">
       <HomeRoute
+        handleTopicClick={handleTopicClick}
         topicData={topicData}
         photoData={photoData}
         toggleFavourite={toggleFavourite}

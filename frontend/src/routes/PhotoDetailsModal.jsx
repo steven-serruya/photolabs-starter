@@ -28,8 +28,7 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite }) => {
 
           favourites={favourites}
           toggleFavourite={toggleFavourite}
-        // toggleModal={toggleModal}
-        // photoData={photoData}
+
         />
 
 

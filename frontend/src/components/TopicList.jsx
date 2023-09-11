@@ -5,11 +5,16 @@ import TopicListItem from "./TopicListItem";
 
 
 const TopicList = (props) => {
+
   return (
     <div className="top-nav-bar__topic-list">
       {props.topicData.map((topic) => {
         return (
-          <TopicListItem key={topic.id} label={topic.title} topicData={props.topicData}
+          <TopicListItem
+            key={topic.id}
+            label={topic.title}
+            topicData={props.topicData}
+            handleTopicClick={() => props.handleTopicClick(topic.id)}
           />
         );
       })}
