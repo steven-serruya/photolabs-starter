@@ -7,10 +7,14 @@ import "../styles/HomeRoute.scss";
 
 // HomeRoute component displays the top navigation and list of photos
 
-const HomeRoute = ({ favourites, toggleFavourite, toggleModal, photoData, topicData, handleTopicClick }) => {
+const HomeRoute = ({ favourites, setCurrentView, toggleFavourite, toggleModal, photoData, topicData, handleTopicClick }) => {
   return (
     <div className="home-route">
-      <TopNavigation favourites={favourites} topicData={topicData} handleTopicClick={handleTopicClick} />
+      <div>
+
+        <TopNavigation setCurrentView={setCurrentView} favourites={favourites} topicData={topicData} handleTopicClick={handleTopicClick} />
+
+      </div>
       <PhotoList
         favourites={favourites}
         toggleFavourite={toggleFavourite}

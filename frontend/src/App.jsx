@@ -30,6 +30,9 @@ const App = () => {
 
   const [favourites, setFavourites] = useState([]);
 
+  const [currentView, setCurrentView] = useState('home');
+  const likedPhotos = photoData.filter(photo => favourites.includes(photo.id));
+
   // State to manage modal's open/close and the selected photo
 
   const [modalState, setModalState] = useState({
@@ -73,10 +76,11 @@ const App = () => {
       <HomeRoute
         handleTopicClick={handleTopicClick}
         topicData={topicData}
-        photoData={photoData}
+        photoData={currentView === 'home' ? photoData : likedPhotos}
         toggleFavourite={toggleFavourite}
         favourites={favourites}
         toggleModal={toggleModal}
+        setCurrentView={setCurrentView}
       />
       {/* Conditionally rendering the PhotoDetailsModal if modalState indicates it's open */}
 
