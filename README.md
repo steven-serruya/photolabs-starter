@@ -1,7 +1,7 @@
 # PhotoLabs
 
 A React single page application (SPA) that allows users to explore, view, and like photos from various categories.
-example
+
 ## 🌟 Features
 
 - **Photo Viewing**: Users can view photos on the homepage loaded dynamically from the API.
