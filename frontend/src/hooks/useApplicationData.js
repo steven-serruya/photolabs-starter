@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 
+// Import necessary hooks from React
+
 import { useReducer, useEffect } from 'react';
+// Initial state for the application data
 
 const useApplicationData = () => {
   const initialState = {
@@ -12,7 +15,11 @@ const useApplicationData = () => {
     photoData: [],
     topicData: []
   };
+  // Use the React useReducer hook to manage complex state logic
+
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Toggle a photo ID in or out of favourites
 
   const updateToFavPhotoIds = (photoId) => {
     if (state.favourites.includes(photoId)) {
@@ -22,35 +29,50 @@ const useApplicationData = () => {
     }
   };
 
+  // Set topic data
+
   const setTopicData = (topics) => {
     dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics } });
   };
 
 
+  // Select a photo
+
   const setPhotoSelected = (photo) => {
     dispatch({ type: ACTIONS.SELECT_PHOTO, payload: { photo } });
   };
+
+  // Close the photo details modal
 
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: { photo: null } });
   };
 
+  // Select a photo (wrapper function)
+
   const onPhotoSelect = (photo) => {
     setPhotoSelected(photo);
   };
+
+  // Set photo data
 
   const setPhotoData = (photos) => {
     dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos } });
   };
 
+  // Load topics
+
   const onLoadTopic = (topics) => {
     dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics } });
   };
+
+  // Handle a topic being clicked
 
   const handleTopicClick = (topicId) => {
     dispatch({ type: ACTIONS.SET_SELECTED_TOPIC, payload: { topicId } });
   };
 
+  // Effect to fetch photos on component mount
 
   useEffect(() => {
     fetch('http://localhost:8001/api/photos')
@@ -64,6 +86,8 @@ const useApplicationData = () => {
       });
   }, []);
 
+  // Effect to fetch topics on component mount
+
   useEffect(() => {
     fetch("http://localhost:8001/api/topics")
 
@@ -71,10 +95,11 @@ const useApplicationData = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         return dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data });
       });
   }, []);
+
+  // Effect to fetch photos based on the selected topic
 
   useEffect(() => {
     if (state.selectedTopic) {
@@ -90,6 +115,7 @@ const useApplicationData = () => {
   }, [state.selectedTopic]);
 
 
+  // Return the state and dispatcher functions
 
   return {
     state,
@@ -104,6 +130,8 @@ const useApplicationData = () => {
   };
 };
 
+// Define action constants
+
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
@@ -114,6 +142,8 @@ export const ACTIONS = {
   SET_SELECTED_TOPIC: 'SET_SELECTED_TOPIC'
 
 };
+
+// Reducer function to handle state updates based on actions
 
 const reducer = (state, action) => {
   switch (action.type) {

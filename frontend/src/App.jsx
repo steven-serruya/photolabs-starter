@@ -1,3 +1,5 @@
+// Importing necessary modules and components
+
 import React from 'react';
 import { useState } from 'react';
 import './App.scss';
@@ -8,6 +10,8 @@ import useApplicationData from 'hooks/useApplicationData';
 
 
 const App = () => {
+  // Destructuring methods and state from the custom hook
+
   const {
     state,
     onPhotoSelect,
@@ -17,16 +21,24 @@ const App = () => {
     handleTopicClick
   } = useApplicationData();
 
+  // Destructuring data from the state
+
   const { photoData } = state;
   const { topicData } = state;
 
-  console.log(topicData);
+  // State to keep track of favourite photos
 
   const [favourites, setFavourites] = useState([]);
+
+  // State to manage modal's open/close and the selected photo
+
   const [modalState, setModalState] = useState({
     isOpen: false,
     selectedPhoto: null
   });
+
+  // Function to add/remove photos from favourites
+
   const toggleFavourite = (photoId) => {
 
     if (favourites.includes(photoId)) {
@@ -35,6 +47,8 @@ const App = () => {
       setFavourites([...favourites, photoId]);
     }
   };
+
+  // Function to open/close modal and set selected photo
 
   const toggleModal = (photo) => {
     if (photo) {
@@ -50,9 +64,12 @@ const App = () => {
     }
   };
 
+  // Component rendering
 
   return (
     <div className="App">
+      {/* HomeRoute component displaying topics and photos */}
+
       <HomeRoute
         handleTopicClick={handleTopicClick}
         topicData={topicData}
@@ -60,7 +77,10 @@ const App = () => {
         toggleFavourite={toggleFavourite}
         favourites={favourites}
         toggleModal={toggleModal}
-      />      {modalState.isOpen &&
+      />
+      {/* Conditionally rendering the PhotoDetailsModal if modalState indicates it's open */}
+
+      {modalState.isOpen &&
         <PhotoDetailsModal
           onClose={toggleModal}
           photo={modalState.selectedPhoto}
