@@ -88,9 +88,6 @@ const App = () => {
           toggleFavourite={toggleFavourite}
           toggleModal={toggleModal}
         />}
-
-
-
     </div>
 
   );
