@@ -103,6 +103,7 @@ const useApplicationData = () => {
   // Effect to fetch photos based on the selected topic
 
   useEffect(() => {
+
     if (state.selectedTopic) {
       fetch(`http://localhost:8001/api/topics/photos/${state.selectedTopic}`)
         .then(response => response.json())
@@ -112,6 +113,9 @@ const useApplicationData = () => {
         .catch(error => {
           console.error('Error fetching photos by topic:', error);
         });
+    } else {
+      dispatch({ type: ACTIONS.SET_SELECTED_TOPIC_PHOTO_DATA, payload: [] });
+
     }
   }, [state.selectedTopic]);
 
