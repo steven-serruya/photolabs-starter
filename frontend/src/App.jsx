@@ -25,21 +25,19 @@ const App = () => {
 
   const { photoData } = state;
   const { topicData } = state;
-
+  const { selectedTopicPhotoData } = state;
   // State to keep track of favourite photos
 
   const [favourites, setFavourites] = useState([]);
 
   const [currentView, setCurrentView] = useState('home');
   const likedPhotos = photoData.filter(photo => favourites.includes(photo.id));
-
   // State to manage modal's open/close and the selected photo
 
   const [modalState, setModalState] = useState({
     isOpen: false,
     selectedPhoto: null
   });
-
   // Function to add/remove photos from favourites
 
   const toggleFavourite = (photoId) => {
@@ -66,6 +64,17 @@ const App = () => {
       });
     }
   };
+  const renderPhotoData = () => {
+    if (selectedTopicPhotoData.length > 0) {
+      return selectedTopicPhotoData;
+
+    }
+    if (currentView === 'home') {
+      return photoData;
+    }
+    return likedPhotos;
+  };
+
 
   // Component rendering
 
@@ -76,7 +85,7 @@ const App = () => {
       <HomeRoute
         handleTopicClick={handleTopicClick}
         topicData={topicData}
-        photoData={currentView === 'home' ? photoData : likedPhotos}
+        photoData={renderPhotoData()}
         toggleFavourite={toggleFavourite}
         favourites={favourites}
         toggleModal={toggleModal}

@@ -8,9 +8,11 @@ import PhotoFavButton from 'components/PhotoFavButton';
 
 // PhotoDetailsModal component to display details of a selected photo
 
-const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite, id, isFav, toggleModal }) => {
+const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite, toggleModal }) => {
+
   const handleToggleFavourite = () => {
-    toggleFavourite(id);
+    console.log("example++++", photo.id);
+    toggleFavourite(photo.id);
 
   };
 
@@ -32,11 +34,9 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite, id, is
       {/* Display the selected photo */}
       <div className="photo-details-modal__images">
         <PhotoFavButton
-          photoId={id}
-          isFav={isFav}
+          photoId={photo.id}
+          isFav={favourites.includes(photo.id)}
           toggleFavourite={handleToggleFavourite}
-          onClick={() => toggleFavourite(photo.id)}
-          toggleModal={toggleModal}
         />
         <img src={photo.urls.regular} alt={`Photo by ${photo.user.username}`} className="photo-details-modal__image" />
       </div>
@@ -45,7 +45,7 @@ const PhotoDetailsModal = ({ onClose, photo, favourites, toggleFavourite, id, is
 
       <div className="photo-details-modal__photographer-details">
         <div className="profile-picture">
-          <img src={photo.user.profile} alt={`Profile ${id}`} className="photo-list__user-profile" />
+          <img src={photo.user.profile} alt={`Profile ${photo.id}`} className="photo-list__user-profile" />
         </div>
         <div className="photo-list__user-info">{photo.user.username}
           <div className="photo-list__user-location">

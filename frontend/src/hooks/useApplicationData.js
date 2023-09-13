@@ -13,7 +13,8 @@ const useApplicationData = () => {
       selectedPhoto: null,
     },
     photoData: [],
-    topicData: []
+    topicData: [],
+    selectedTopicPhotoData: []
   };
   // Use the React useReducer hook to manage complex state logic
 
@@ -106,7 +107,7 @@ const useApplicationData = () => {
       fetch(`http://localhost:8001/api/topics/photos/${state.selectedTopic}`)
         .then(response => response.json())
         .then(data => {
-          dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
+          dispatch({ type: ACTIONS.SET_SELECTED_TOPIC_PHOTO_DATA, payload: data });
         })
         .catch(error => {
           console.error('Error fetching photos by topic:', error);
@@ -139,7 +140,8 @@ export const ACTIONS = {
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
   DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
-  SET_SELECTED_TOPIC: 'SET_SELECTED_TOPIC'
+  SET_SELECTED_TOPIC: 'SET_SELECTED_TOPIC',
+  SET_SELECTED_TOPIC_PHOTO_DATA: 'SET_SELECTED_TOPIC_PHOTO_DATA'
 
 };
 
@@ -187,6 +189,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         selectedTopic: action.payload.topicId
+      };
+
+    case ACTIONS.SET_SELECTED_TOPIC_PHOTO_DATA:
+      return {
+        ...state,
+        selectedTopicPhotoData: action.payload
+
       };
     default:
       throw new Error(`Tried to reduce with unsupported action type: ${action.type}`);
