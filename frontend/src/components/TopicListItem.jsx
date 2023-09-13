@@ -2,21 +2,12 @@ import React from "react";
 
 import "../styles/TopicListItem.scss";
 
-
-
-const TopicListItem = ({ label, handleTopicClick, id }) => {
-  const handleClick = (e, id) => {
-    e.preventDefault();  // Prevents the default action of the <a> tag
-    handleTopicClick(id);
-  };
+const TopicListItem = ({slug, title, fetchPhotosByTopic}) => {
   return (
-    <div className="topic-list__item">
-      <a href="#" onClick={(e) => handleClick(e, id)}>
-        {label}
-      </a>
+    <div className="topic-list__item" data-slug={slug}>
+      <span onClick={fetchPhotosByTopic}>{title}</span>
     </div>
   );
 };
-
 
 export default TopicListItem;

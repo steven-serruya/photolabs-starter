@@ -1,31 +1,21 @@
-import React from 'react';
+import React, {useContext} from "react";
 
-import '../styles/PhotoList.scss';
-import PhotoListItem from './PhotoListItem';
+import "../styles/PhotoList.scss";
+import PhotoListItem from "./PhotoListItem";
+import {AppContext} from "../App";
 
-
-
-
-const PhotoList = ({ favourites, toggleFavourite, toggleModal, photoData }) => {
+const PhotoList = () => {
+  const {state} = useContext(AppContext);
+  const photos = state.photoData;
   return (
     <ul className="photo-list">
-      {photoData.map((photoData) => {
-        return (
+      {photos.map((item) => (
+        <li key={item.id}>
           <PhotoListItem
-            className="photo-list-item"
-            key={photoData.id}
-            id={photoData.id}
-            location={photoData.location}
-            imageSource={photoData.urls.regular}
-            username={photoData.user.username}
-            profile={photoData.user.profile}
-            isFav={favourites.includes(photoData.id)}
-            toggleFavourite={toggleFavourite}
-            photo={photoData}
-            toggleModal={toggleModal}
+            displayItem={item}
           />
-        );
-      })}
+        </li>
+      ))}
     </ul>
   );
 };

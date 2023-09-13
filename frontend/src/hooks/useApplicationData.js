@@ -1,196 +1,139 @@
 /* eslint-disable indent */
 
-// Import necessary hooks from React
+import { useEffect, useReducer } from "react";
+import axios from 'axios';
 
-import { useReducer, useEffect } from 'react';
-// Initial state for the application data
-
+const ACTIONS = {
+  FAV_PHOTO: 'FAV_PHOTO',
+  SELECT_PHOTO: 'SELECT_PHOTO',
+  DETAIL_MODAL: 'DETAIL_MODAL',
+  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
+  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
+  GET_PHOTOS_BY_TOPICS: 'GET_PHOTOS_BY_TOPICS'
+};
 const useApplicationData = () => {
-  const initialState = {
-    favourites: [],
-    modalState: {
-      isOpen: false,
-      selectedPhoto: null,
-    },
-    photoData: [],
-    topicData: []
+
+  // use Promise.all to handle multiple api requests
+  const requests = [axios.get('/api/photos'), axios.get('/api/topics')];
+
+  useEffect(() => {
+    Promise.all(requests)
+      .then(res => {
+        const photos = res[0].data;
+        const topics = res[1].data;
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: photos });
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topics });
+      });
+  }, []);
+
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case ACTIONS.FAV_PHOTO:
+        if (state.favorite.includes(action.payload)) {
+          return {
+            ...state,
+            favorite: state.favorite.filter(id => id !== action.payload)
+          };
+        } else {
+          return {
+            ...state,
+            favorite: [...state.favorite, action.payload]
+          };
+        }
+
+      case ACTIONS.SELECT_PHOTO:
+        if (state.select.includes(action.payload)) {
+          return {
+            ...state,
+            select: state.select.filter(id => id !== action.payload)
+          };
+        } else {
+          return {
+            ...state,
+            select: [...state.select, action.payload]
+          };
+        }
+
+      case ACTIONS.DETAIL_MODAL:
+        if (action.payload === null || state.detailItem === action.payload) {
+          return {
+            ...state,
+            detailModal: false,
+            detailItem: null
+          };
+        } else {
+          return {
+            ...state,
+            detailModal: true,
+            detailItem: action.payload
+          };
+        }
+      case ACTIONS.SET_PHOTO_DATA:
+        return {
+          ...state,
+          photoData: action.payload
+        };
+
+      case ACTIONS.SET_TOPIC_DATA:
+        return {
+          ...state,
+          topicData: action.payload
+        };
+
+      case ACTIONS.GET_PHOTOS_BY_TOPICS:
+        return {
+          ...state,
+          photoData: action.payload
+        };
+
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+
+    }
   };
-  // Use the React useReducer hook to manage complex state logic
+
+  const initialState = {
+    photoData: [],
+    topicData: [],
+    favorite: [],
+    detailModal: false,
+    detailItem: [],
+    select: []
+  };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Toggle a photo ID in or out of favourites
 
-  const updateToFavPhotoIds = (photoId) => {
-    if (state.favourites.includes(photoId)) {
-      dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: { photoId } });
-    } else {
-      dispatch({ type: ACTIONS.FAV_PHOTO_ADDED, payload: { photoId } });
-    }
+  const isSelected = (id) => {
+    return state.select.includes(id);
+  };
+  const updateToFavPhotoIds = (item) => {
+    dispatch({ type: ACTIONS.FAV_PHOTO, payload: item.id });
   };
 
-  // Set topic data
-
-  const setTopicData = (topics) => {
-    dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics } });
+  const setPhotoSelected = (item) => {
+    dispatch({ type: ACTIONS.SELECT_PHOTO, payload: item.id });
   };
 
-
-  // Select a photo
-
-  const setPhotoSelected = (photo) => {
-    dispatch({ type: ACTIONS.SELECT_PHOTO, payload: { photo } });
+  const onClosePhotoDetailsModal = (item) => {
+    dispatch({ type: ACTIONS.DETAIL_MODAL, payload: item });
   };
 
-  // Close the photo details modal
-
-  const onClosePhotoDetailsModal = () => {
-    dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: { photo: null } });
-  };
-
-  // Select a photo (wrapper function)
-
-  const onPhotoSelect = (photo) => {
-    setPhotoSelected(photo);
-  };
-
-  // Set photo data
-
-  const setPhotoData = (photos) => {
-    dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: { photos } });
-  };
-
-  // Load topics
-
-  const onLoadTopic = (topics) => {
-    dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: { topics } });
-  };
-
-  // Handle a topic being clicked
-
-  const handleTopicClick = (topicId) => {
-    dispatch({ type: ACTIONS.SET_SELECTED_TOPIC, payload: { topicId } });
-  };
-
-  // Effect to fetch photos on component mount
-
-  useEffect(() => {
-    fetch('http://localhost:8001/api/photos')
-      .then(response => response.json())
-
-      .then(data => {
-        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-      })
-      .catch(error => {
-        console.error('Error fetching photos:', error);
+  const fetchPhotosByTopic = (topic) => {
+    axios.get(`/api/topics/photos/${topic}`)
+      .then(res => {
+        const photos = res.data;
+        dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: photos });
       });
-  }, []);
 
-  // Effect to fetch topics on component mount
-
-  useEffect(() => {
-    fetch("http://localhost:8001/api/topics")
-
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        return dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data });
-      });
-  }, []);
-
-  // Effect to fetch photos based on the selected topic
-
-  useEffect(() => {
-    if (state.selectedTopic) {
-      fetch(`http://localhost:8001/api/topics/photos/${state.selectedTopic}`)
-        .then(response => response.json())
-        .then(data => {
-          dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data });
-        })
-        .catch(error => {
-          console.error('Error fetching photos by topic:', error);
-        });
-    }
-  }, [state.selectedTopic]);
-
-
-  // Return the state and dispatcher functions
+  };
 
   return {
-    state,
-    onPhotoSelect,
-    updateToFavPhotoIds,
-    onLoadTopic,
-    onClosePhotoDetailsModal,
-    setPhotoSelected,
-    setPhotoData,
-    setTopicData,
-    handleTopicClick
+    state, isSelected, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal, fetchPhotosByTopic
   };
-};
-
-// Define action constants
-
-export const ACTIONS = {
-  FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
-  FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
-  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
-  SELECT_PHOTO: 'SELECT_PHOTO',
-  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS',
-  SET_SELECTED_TOPIC: 'SET_SELECTED_TOPIC'
-
-};
-
-// Reducer function to handle state updates based on actions
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTIONS.FAV_PHOTO_ADDED:
-      return {
-        ...state,
-        favourites: [...state.favourites, action.payload.photoId],
-      };
-    case ACTIONS.FAV_PHOTO_REMOVED:
-      return {
-        ...state,
-        favourites: state.favourites.filter(id => id !== action.payload.photoId),
-      };
-    case ACTIONS.SET_PHOTO_DATA:
-      return {
-        ...state,
-        photoData: action.payload,
-      };
-    case ACTIONS.SET_TOPIC_DATA:
-      return {
-        ...state,
-        topicData: action.payload,
-      };
-    case ACTIONS.SELECT_PHOTO:
-      return {
-        ...state,
-        modalState: {
-          ...state.modalState,
-          selectedPhoto: action.payload.photo,
-        },
-      };
-    case ACTIONS.DISPLAY_PHOTO_DETAILS:
-      return {
-        ...state,
-        modalState: {
-          isOpen: !!action.payload.photo,
-          selectedPhoto: action.payload.photo,
-        },
-      };
-    case ACTIONS.SET_SELECTED_TOPIC:
-      return {
-        ...state,
-        selectedTopic: action.payload.topicId
-      };
-    default:
-      throw new Error(`Tried to reduce with unsupported action type: ${action.type}`);
-  }
 };
 
 export default useApplicationData;

@@ -1,40 +1,42 @@
-import React from "react";
-import PhotoFavButton from "./PhotoFavButton";
+import React, { useContext } from "react";
+
 import "../styles/PhotoListItem.scss";
+import PhotoFavButton from "./PhotoFavButton";
+import { AppContext } from "../App";
 
 
+const PhotoListItem = ({ displayItem }) => {
 
-const PhotoListItem = ({ id, location, imageSource, username, profile, isFav, toggleFavourite, toggleModal, photo }) => {
-  const handleToggleFavourite = () => {
-    toggleFavourite(id);
+  // deconstruct object
+  const {
+    urls: { regular, full },
+    user: { profile, username },
+    location: { city, country },
+  } = displayItem;
 
-  };
+  const { state, isSelected, updateToFavPhotoIds, setPhotoSelected, onClosePhotoDetailsModal } = useContext(AppContext);
+
+
   return (
     <div className="photo-list__item">
-      <PhotoFavButton
-        photoId={id}
-        isFav={isFav}
-        toggleFavourite={handleToggleFavourite}
-        onClick={() => toggleFavourite(photo.id)}
-        toggleModal={toggleModal}
-      />
-      <div className="photo">
-        <img src={imageSource} alt={`Photo ${id}`} className="photo-list__image" onClick={() => toggleModal(photo)}
-        />
-      </div>
+      <PhotoFavButton selected={isSelected(displayItem.id)} onClick={() => {
+        updateToFavPhotoIds(displayItem);
+        setPhotoSelected(displayItem);
+      }} />
+      <img src={state.detailModal ? regular : full} alt="photo" className="photo-list__image"
+        onClick={() => onClosePhotoDetailsModal(displayItem)} />
+
       <div className="photo-list__user-details">
-        <div className="profile-picture">
-          <img src={profile} alt={`Profile ${id}`} className="photo-list__user-profile" />
+        <img src={profile} alt="profile picture" className="photo-list__user-profile" />
+        <div className="photo-list__user-info">
+          <p>{username}</p>
+          <p className="photo-list__user-location">{city}, {country}</p>
         </div>
-        <div className="photo-list__user-info">{username}
-          <div className="photo-list__user-location">
-            {location.city}, {location.country}
-          </div>
-        </div>
-
-
       </div>
+
     </div>
+
+
   );
 };
 
